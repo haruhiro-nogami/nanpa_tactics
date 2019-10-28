@@ -10,31 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_22_143344) do
+ActiveRecord::Schema.define(version: 2019_10_28_083833) do
 
   create_table "posts", force: :cascade do |t|
-    t.string "title"
+    t.string "title", limit: 100, null: false
     t.integer "age"
     t.integer "height"
     t.string "body_shape"
     t.string "looks_type"
     t.string "nanpa_style"
-    t.string "prefecture"
+    t.integer "prefecture"
     t.string "place"
     t.string "time"
-    t.string "wheather"
+    t.string "weather"
     t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "name"
-    t.string "email"
-    t.integer "password"
-    t.text "description"
+    t.string "name", limit: 10, null: false
+    t.string "email", null: false
+    t.string "password", null: false
+    t.string "password_digest", null: false
+    t.text "description", limit: 1000
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "admin", default: false, null: false
   end
 
 end

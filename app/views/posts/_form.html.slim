@@ -1,0 +1,53 @@
+- if post.errors.present?
+  ul#error_explanation
+    - post.errors.full_messages.each do |message|
+      li = message
+
+= form_with model: post, local: true do |f|
+  .form-group
+    = f.label :"タイトル"
+    = f.text_field :title, class: "form-control", id: "post_title"
+
+  = f.label :"-ターゲットデータ-"
+
+  .form-group
+    = f.label :"年齢"
+    = f.text_field :age, class: "form-control", id: "post_age"
+
+  .form-group
+    = f.label :"身長"
+    = f.select :height, [["140以下", 140], ["141~150", 150],  ["151~160", 160], ["161~170", 170],["171以上", 171] ],  :prompt => "選択してください", class: 'form-control'
+
+  .form-group
+    = f.label :"体型"
+    = f.select :body_shape, [["痩せ型", "痩せ型"], ["普通", "普通"],  ["ぽっちゃり", "ぽっちゃり"], ["太め", "太め"],["グラマー", "グラマー"] ],  :prompt => "選択してください", class: 'form-control'
+
+  .form-group
+    = f.label :"ナンパ形式"
+    = f.select :nanpa_style, [["ストリート", "ストリート"], ["マッチングアプリ", "マッチングアプリ"],  ["SNSナンパ", "SNSナンパ"], ["クラブ", "クラブ"],["海", "海"] ,["オフパコ", "オフパコ"] ],  :prompt => "選択してください", class: 'form-control'
+
+  .form-group
+    = f.label :"ナンパした都道府県"
+    = f.select :prefecture, Post.prefectures.keys, prompt: '選択してください', class: "form-control"
+
+  .form-group
+    = f.label :"ナンパしたスポット"
+    = f.text_field :place, class: "form-control", id: "post_place"
+
+  .form-group
+    = f.label :"時間帯"
+    = f.select :time, [["午前中", "午前中"], ["昼過ぎ", "昼過ぎ"],  ["夕方", "夕方"], ["夜", "夜"],["終電後", "終電後"] ,["早朝", "早朝"] ],  :prompt => "選択してください", class: 'form-control'
+
+  .form-group
+    = f.label :"天気"
+    = f.select :weather, [["晴れ", "晴れ"], ["曇り", "曇り"],  ["雨", "雨"], ["雪", "雪"] ],  :prompt => "選択してください", class: 'form-control'
+
+  .form-group
+    = f.label :"詳細"
+    = f.text_area :description, rows: 5, class: "form-control", id:  "post_description"
+
+  .form-group
+    = f.label :"画像"
+    = f.file_field :image, class: "form-control"
+
+    = f.submit nil , class: "btn btn-primary"
