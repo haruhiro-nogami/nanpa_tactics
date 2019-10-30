@@ -16,7 +16,9 @@ html
           li.nav-item= link_to "投稿一覧", posts_path, class: "nav-link"
           - if current_user.admin?
           li.nav-item= link_to "ユーザー一覧", admin_users_path, class: "nav-link"
+          li.nav-item= link_to "詳細検索", search_path, class: "nav-link"
           li.nav-item= link_to "ログアウト", logout_path, method: :delete, class: "nav-link"
+
         - else
           li.nav-item= link_to "ログイン", login_path, class: "nav-link"
 

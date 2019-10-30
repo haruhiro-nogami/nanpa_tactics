@@ -1,10 +1,13 @@
 class PostsController < ApplicationController
+
+  before_action :set_post, only: [:show, :edit, :update, :destroy]
+
   def index
-    @posts = Post.all
+    @q = current_user.posts.ransack(params[:q])
+    @posts = @q.result(distinct: true)
   end
 
   def show
-    @post = Post.find(params[:id])
   end
 
   def new
@@ -12,11 +15,15 @@ class PostsController < ApplicationController
   end
 
   def edit
-    @post = Post.find(params[:id])
+  end
+
+  def search
+    @q = current_user.posts.ransack(params[:q])
+    @posts = @q.result(distinct: true)
   end
 
   def create
-    @post = Post.new(post_params)
+    @post = current_user.posts.new(post_params)
     if @post.save!
       redirect_to posts_url, notice: "投稿に成功しました"
     else
@@ -25,14 +32,12 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    post = Post.find(params[:id])
-    post.destroy
+    @post.destroy
     redirect_to posts_url, notice: "投稿が削除されました"
   end
 
   def update
-    post = Post.find(params[:id])
-    post.update!(post_params)
+    @post.update!(post_params)
     redirect_to posts_url, notice: "投稿が更新されました"
   end
 
@@ -52,5 +57,8 @@ class PostsController < ApplicationController
                                 )
   end
 
+  def set_post
+    @post = current_user.posts.find(params[:id])
+  end
 
 end

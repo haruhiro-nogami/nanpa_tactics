@@ -1,11 +1,18 @@
-h1 投稿一覧
+h1  詳細検索
 
-= search_form_for @q, class: "mb-5" do |f|
-  .form-group.row
-    = f.label :title_cont, "タイトル検索", class: "col-sm-2 col-form-label"
-    .col-sm-10
-      = f.search_field :title_cont, class: "form-control"
-    = f.submit class: "btn btn-outline-primary"
+= search_form_for @q, url: search_path, class: "mb-5" do |f|
+  .form-group
+    = f.label :"タイトル"
+    = f.text_field :title, class: "form-control", id: "post_title"
+
+  .form-group
+    = f.label :"年齢"
+    = f.select :age_gteq, Post.ages.keys, :prompt => "選択してください", class: 'form-control'
+    = f.label :"歳から"
+    = f.select :age_lteq, Post.ages.keys, :prompt => "選択してください", class: 'form-control'
+    = f.label :"歳まで"
+
+    = f.submit nil , class: "btn btn-primary"
 
 = link_to "新規投稿", new_post_path, class: "btn btn-primary"
 
@@ -18,7 +25,7 @@ table.table.table-hover
     th= Post.human_attribute_name(:title)
     th= Post.human_attribute_name(:age)
     th= Post.human_attribute_name(:body_shape)
-    th= Post.human_attribute_name(:created_at)
+    th= Post.human_attribute_name(:height)
     th
   tbody
   - @posts.each do |post|
@@ -26,7 +33,7 @@ table.table.table-hover
     td= link_to post.title, post_path(post)
     td= post.age
     td= post.body_shape
-    td= post.created_at
+    td= post.height
     td
       = link_to "編集", edit_post_path(post), class: "btn btn-primary mr-3"
       = link_to "削除", post, method: :delete, data: { confirm: "投稿を削除します。よろしいですか？"}, class: "btn btn-danger"
