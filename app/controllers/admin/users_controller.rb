@@ -1,5 +1,6 @@
 class Admin::UsersController < ApplicationController
   before_action :require_admin
+  skip_before_action :login_required, only: [:new]
 
 
   def index

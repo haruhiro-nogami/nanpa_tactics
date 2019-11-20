@@ -1,9 +1,10 @@
 class PostsController < ApplicationController
 
   before_action :set_post, only: [:show, :edit, :update, :destroy]
+  skip_before_action :login_required, only: [:index, :search]
 
   def index
-    @q = current_user.posts.ransack(params[:q])
+    @q = Post.all.ransack(params[:q])
     @posts = @q.result(distinct: true)
   end
 
@@ -18,7 +19,7 @@ class PostsController < ApplicationController
   end
 
   def search
-    @q = current_user.posts.ransack(params[:q])
+    @q = Post.all.ransack(params[:q])
     @posts = @q.result(distinct: true)
   end
 
